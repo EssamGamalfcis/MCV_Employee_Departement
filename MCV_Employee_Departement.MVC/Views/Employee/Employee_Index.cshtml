@@ -1,0 +1,175 @@
+﻿@model MCV_Employee_Department.API.ViewModel.GetEmployeeResponse
+@{ ViewData["Title"] = "Employee Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<h1 style="text-align: center; margin-top: 10px; margin-bottom: 30px;">Manage employees</h1>
+
+<div id='addEmployeeModal' class='modal fade' data-url='@Url.Action("AddOrEditEmployee")?id=0'>
+    <div id='addEmployeeContainer' class="container partialViewModal">
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <select class="form-control" id="DepartmentFilter" onchange="GetEmployeeByDepartment(this)">
+                <option value="" selected>All departments</option>
+                @{
+                    foreach (var Department in ViewBag.Departments)
+                    {
+                        <option value="@Department.Id">@Department.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-4">
+        </div>
+        <div class="col-4">
+            <button id='addEmployee' class="btn btn-primary btn-outline-primary" style="float: right; margin: 10px;">Add new employee</button>
+        </div>
+    </div>
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Hiring date</th>
+                <th>Birth date</th>
+                <th>Department</th>
+                <th style="text-align:center">Update / Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Employee in Model.Employees)
+            {
+                <tr>
+                    <td>@Employee.Name</td>
+                    <td>@Employee.Title</td>
+                    <td>@Employee.HiringDate.ToString("MM/dd/yyyy")</td>
+                    <td>@Employee.BirthDate.ToString("MM/dd/yyyy")</td>
+                    <td>@Employee.DepartmentName</td>
+                    <td style="text-align:center">
+                        <a class="btn btn-primary editEmployee" style="cursor: pointer; color: white;" employeeId="@Employee.Id">Update</a>
+                        <a class="btn btn-danger" style="cursor: pointer; color: white;" employeeId="@Employee.Id" onclick="Delete(this)">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="box">
+        <ul id="example-2" class="pagination"></ul>
+    </div>
+    <script>
+        function GetEmployeeByDepartment(obj) {
+            sessionStorage.setItem("pageIndex", null);
+            sessionStorage.setItem("departmentFilter", $(obj).val());
+            window.location.href = '@Url.Action("Employee_Index")?PageIndex=' + 0 + '&DepartmentId=' + $(obj).val();
+        }
+        if (sessionStorage.getItem("departmentFilter") != null) {
+            $('#DepartmentFilter').val(sessionStorage.getItem("departmentFilter"));
+        }
+    var totalCount = @Model.TotalCount;
+        PaginationBar((sessionStorage.getItem("pageIndex") == null || sessionStorage.getItem("pageIndex") == 'null' ? 1 : sessionStorage.getItem("pageIndex")) ,totalCount);
+        function PaginationBar(currentpage, pagecounts) {
+
+            var totalCount = pagecounts
+            var length = 10;
+            sessionStorage.setItem("pageIndex", currentpage);
+            $('#example-2').pagination({
+                total: totalCount,
+                current: currentpage,
+                length: length,
+                size: 0,
+                prev: 'Previous',
+                next: 'Next',
+                click: function (options, $target) {
+                    sessionStorage.setItem("pageIndex", options.current);
+                    window.location.href = '@Url.Action("Employee_Index")?PageIndex=' + (sessionStorage.getItem("pageIndex") -1 );
+                }
+            });
+        }
+    $(document).ready(function () {
+                $('#addEmployee').click(function () {
+                    var url = $('#addEmployeeModal').data('url');
+                    $.get(url, function (data) {
+                        $('#addEmployeeContainer').html(data);
+                        $("#addEmployeeModal").addClass("in");
+                        $(".modal-backdrop").show()
+                        $("#addEmployeeModal").show();
+                        $('#addEmployeeModal').modal('show');
+                    });
+                });
+        $('.editEmployee').click(function () {
+            var url = $('#addEmployeeModal').data('url');
+                    url = url.replace('0', $(this).attr('employeeId'))
+                    $.get(url, function (data) {
+                        $('#addEmployeeContainer').html(data);
+                        $("#addEmployeeModal").addClass("in");
+                        $(".modal-backdrop").show()
+                        $("#addEmployeeModal").show();
+                        $('#addEmployeeModal').modal('show');
+                    });
+                });
+            });
+            function Cancel() {
+                $("#addEmployeeModal").removeClass("in");
+                $(".modal-backdrop").hide()
+                $("#addEmployeeModal").hide();
+            }
+            function Delete(obj) {
+                var objToSend = {};
+                Swal.fire({
+                    title: 'Confirmation',
+                    text: "Are you sure",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: "Cancel",
+                    confirmButtonText: 'Delete'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("DeleteEmployee")",
+                            data: { id: $(obj).attr('employeeId') },
+                            dataType: "text",
+                            success: function (response) {
+                                if (response == "True") {
+                                    Swal.fire(
+                                        'Deleted',
+                                        'Deleted successfully',
+                                        'success'
+                                    ).then((result) => {
+                                        Cancel();
+                                        location.reload();
+                                    })
+
+                                }
+                                else {
+                                    Swal.fire(
+                                        'warning',
+                                        'Please try again later',
+                                        'warning'
+                                    );
+                                    $('#Loader').hide();
+                                    $('#SaveBtn').show();
+                                    $('#CancelBtn').show();
+                                }
+                            },
+                            error: function (req, status, error) {
+                                Swal.fire(
+                                    'warning',
+                                    'server error',
+                                    'warning'
+                                );
+                                $('#Loader').hide();
+                                $('#SaveBtn').show();
+                                $('#CancelBtn').show();
+                            }
+                        });
+                    }
+                })
+            }
+    </script>

@@ -1,0 +1,143 @@
+﻿@model MCV_Employee_Department.API.Model.Employee
+@{
+
+    <div class="form-row">
+        <div class="col">
+            <label for="EmpName" class="partalViewModalLables">Name<span style="color:red">*</span></label>
+            <input type="text" id="EmpName" class="form-control" value="@Model.Name" placeholder="Name">
+        </div>
+        <div class="col">
+            <label for="EmpTitle" class="partalViewModalLables">Title</label>
+            <input type="text" id="EmpTitle" class="form-control" value="@Model.Title" placeholder="Title">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <label for="DateOfBirth" class="partalViewModalLables">Date of birth<span style="color:red">*</span></label>
+            <input type="text" class="form-control datepicker" readonly id="DateOfBirth"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+        <div class="col">
+            <label for="HiringDate" class="partalViewModalLables">Hiring Date<span style="color:red">*</span></label>
+            <input type="text" class="form-control datepicker" readonly id="HiringDate"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+        <div class="col" style="margin-top:45px;">
+            <select class="form-control" id="Department">
+                @{
+                    foreach (var Department in ViewBag.Departments)
+                    {
+                        if (Department.Id == Model.DepartmentID)
+                        {
+                            <option value="@Department.Id" selected>@Department.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@Department.Id">@Department.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-row" style="margin-right: 43%; margin-top: 20px; padding-bottom: 20px; ">
+
+        <div class="d-flex justify-content-center" style="margin-right: 10%; margin-top: 1%;">
+            <div class="spinner-border" id="Loader" role="status" style="display:none !important">
+            </div>
+        </div>
+        <input type="button" id="SaveBtn" style=" margin-left: 25px; margin-right: -49px;" class="btn btn-info" onclick="EmployeeSaveChange()" value="حفظ" />
+        <input type="button" id="CancelBtn" class="btn btn-danger" onclick="Cancel()" value="إلغاء" />
+    </div>
+
+}
+
+<script>
+    $(function () {
+        $('.datepicker').datepicker({
+            changeYear: true,
+            yearRange: "-100:+0",
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+    var empId = '@Model.Id';
+    if (empId != '0') {
+        setTimeout(function () {  var dateOfBirth = '@Model.BirthDate';
+        var hiringDate = '@Model.HiringDate';
+        $('#DateOfBirth').datepicker("setDate", new Date(dateOfBirth));
+            $('#HiringDate').datepicker("setDate", new Date(hiringDate));
+        }, 250);
+
+
+    }
+    function EmployeeSaveChange() {
+
+        $('#Loader').show();
+        $('#SaveBtn').hide();
+        $('#CancelBtn').hide();
+        if ($('#EmpName').val().trim() == '' || $("#HiringDate").val().trim() == '' || $("#DateOfBirth").val().trim() == '') {
+            Swal.fire(
+                'warning',
+                'Please fill the mandatory data',
+                'warning'
+            );
+            $('#Loader').hide();
+            $('#SaveBtn').show();
+            $('#CancelBtn').show();
+            return 0;
+        }
+        var objToSend = {};
+        var hiringDateMiusOneDay = new Date($("#HiringDate").val());
+        var birthDateDateMiusOneDay = new Date($("#DateOfBirth").val());
+        var hiringDateMiusNow = hiringDateMiusOneDay.setDate(hiringDateMiusOneDay.getDate() + 1);
+        var birthDateDateNow = birthDateDateMiusOneDay.setDate(birthDateDateMiusOneDay.getDate() + 1);
+        var hiringDate = $("#HiringDate").val() != "" ? new Date(hiringDateMiusNow).toISOString() : null;
+        var birthDate = $("#DateOfBirth").val() != "" ? new Date(birthDateDateNow).toISOString() : null;
+        objToSend.Id = '@Model.Id';
+        objToSend.Name = $('#EmpName').val();
+        objToSend.Title = $('#EmpTitle').val();
+        objToSend.HiringDate = hiringDate;
+        objToSend.BirthDate = birthDate;
+        objToSend.DepartmentID = $('#Department').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddOrUpdateEmployee")",
+            data: { emp: objToSend},
+            dataType: "text",
+            success: function (response) {
+                if (response == "True") {
+                    Swal.fire(
+                        'Good',
+                        'Saved successfully',
+                        'success'
+                    ).then((result) => {
+                        Cancel();
+                        location.reload();
+                    })
+
+                }
+                else {
+                    Swal.fire(
+                        'warning',
+                        'Please try again later',
+                        'warning'
+                    );
+                    $('#Loader').hide();
+                    $('#SaveBtn').show();
+                    $('#CancelBtn').show();
+                }
+            },
+            error: function (req, status, error) {
+                Swal.fire(
+                    'warning',
+                    'Server error',
+                    'warning'
+                );
+                $('#Loader').hide();
+                $('#SaveBtn').show();
+                $('#CancelBtn').show();
+            }
+        });
+
+    }
+
+</script>

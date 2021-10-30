@@ -1,0 +1,390 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+.datepicker-dropdown {
+    top: 0;
+    left: 0;
+    padding: 4px;
+    background-color: #2C6E8E;
+    border-radius: 10px;
+}
+
+.datepicker table {
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .datepicker table tr td,
+    .datepicker table tr th {
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        border: none;
+        color: #FFFFFF;
+    }
+
+        .datepicker table tr td.day:hover,
+        .datepicker table tr td.focused {
+            background: #555555;
+            cursor: pointer;
+        }
+
+        .datepicker table tr td.old,
+        .datepicker table tr td.new {
+            color: #FF8000;
+        }
+
+        .datepicker table tr td.today {
+            color: #000000;
+            background-color: #FFA953;
+            border-color: #FFB76F;
+        }
+
+            .datepicker table tr td.today:hover {
+                color: #FFFFFF;
+                background-color: #884400;
+                border-color: #f59e00;
+            }
+
+        .datepicker table tr td.active:active,
+        .datepicker table tr td.active.highlighted:active,
+        .datepicker table tr td.active.active,
+        .datepicker table tr td.active.highlighted.active,
+        .open > .dropdown-toggle.datepicker table tr td.active,
+        .open > .dropdown-toggle.datepicker table tr td.active.highlighted {
+            color: #ffffff;
+            background-color: #419841;
+            border-color: #285e8e;
+        }
+
+
+            .datepicker table tr td.active:active:hover,
+            .datepicker table tr td.active.highlighted:active:hover,
+            .datepicker table tr td.active.active:hover,
+            .datepicker table tr td.active.highlighted.active:hover,
+            .open > .dropdown-toggle.datepicker table tr td.active:hover,
+            .open > .dropdown-toggle.datepicker table tr td.active.highlighted:hover,
+            .datepicker table tr td.active:active:focus,
+            .datepicker table tr td.active.highlighted:active:focus,
+            .datepicker table tr td.active.active:focus,
+            .datepicker table tr td.active.highlighted.active:focus,
+            .open > .dropdown-toggle.datepicker table tr td.active:focus,
+            .open > .dropdown-toggle.datepicker table tr td.active.highlighted:focus,
+            .datepicker table tr td.active:active.focus,
+            .datepicker table tr td.active.highlighted:active.focus,
+            .datepicker table tr td.active.active.focus,
+            .datepicker table tr td.active.highlighted.active.focus,
+            .open > .dropdown-toggle.datepicker table tr td.active.focus,
+            .open > .dropdown-toggle.datepicker table tr td.active.highlighted.focus {
+                color: #ffffff;
+                background-color: #285e8e;
+                border-color: #193c5a;
+            }
+
+            .datepicker table tr td.active:active,
+            .datepicker table tr td.active.highlighted:active,
+            .datepicker table tr td.active.active,
+            .datepicker table tr td.active.highlighted.active,
+            .open > .dropdown-toggle.datepicker table tr td.active,
+            .open > .dropdown-toggle.datepicker table tr td.active.highlighted {
+                color: #ffffff;
+                background-color: #3071a9;
+                border-color: #285e8e;
+            }
+
+                .datepicker table tr td.active:active:hover,
+                .datepicker table tr td.active.highlighted:active:hover,
+                .datepicker table tr td.active.active:hover,
+                .datepicker table tr td.active.highlighted.active:hover,
+                .open > .dropdown-toggle.datepicker table tr td.active:hover,
+                .open > .dropdown-toggle.datepicker table tr td.active.highlighted:hover,
+                .datepicker table tr td.active:active:focus,
+                .datepicker table tr td.active.highlighted:active:focus,
+                .datepicker table tr td.active.active:focus,
+                .datepicker table tr td.active.highlighted.active:focus,
+                .open > .dropdown-toggle.datepicker table tr td.active:focus,
+                .open > .dropdown-toggle.datepicker table tr td.active.highlighted:focus,
+                .datepicker table tr td.active:active.focus,
+                .datepicker table tr td.active.highlighted:active.focus,
+                .datepicker table tr td.active.active.focus,
+                .datepicker table tr td.active.highlighted.active.focus,
+                .open > .dropdown-toggle.datepicker table tr td.active.focus,
+                .open > .dropdown-toggle.datepicker table tr td.active.highlighted.focus {
+                    color: #ffffff;
+                    background-color: #285e8e;
+                    border-color: #193c5a;
+                }
+
+.datepicker .datepicker-switch {
+    width: 145px;
+}
+.datepicker {
+    z-index: 99999 !important;
+}
+
+    .datepicker .datepicker-switch:hover,
+    .datepicker .prev:hover,
+    .datepicker .next:hover,
+    .datepicker tfoot tr th:hover {
+        background: #50A2C9;
+    }
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.user_card {
+    height: 400px;
+    width: 350px;
+    margin-top: 11%;
+    margin-bottom: auto;
+    background: #8abaeb;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background: #60a3bc;
+    padding: 10px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.form_container {
+    margin-top: 100px;
+}
+
+.login_btn {
+    width: 100%;
+    background: #c0392b !important;
+    color: white !important;
+}
+
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: #c0392b !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #c0392b !important;
+}
+.navbar {
+    background: #222222;
+}
+
+.nav-item::after {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 2px;
+    background: #fec400;
+    transition: 0.2s;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+.navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+    color: #fec400;
+}
+
+.nav-link {
+    padding: 15px 5px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #212529;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background: #fec400;
+}
+.imageLogo {
+    width: 25px;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+.navbar-nav {
+    float: right;
+    right: 25px;
+}
+.dropdown-item {
+cursor:pointer;
+}
+.partialViewModal {
+    background-color: #add5f1;
+    margin-top: 10%;
+    border-radius: 15px;
+    direction: rtl;
+}
+.partalViewModalLables {
+    float: right;
+    margin: 3%;
+}
+/*the container must be positioned relative:*/
+.custom-select {
+    position: relative;
+    font-family: Arial;
+}
+
+.custom-select select {
+    display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+}
+
+    /*style the arrow inside the select element:*/
+    .select-selected:after {
+        position: absolute;
+        content: "";
+        top: 14px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border: 6px solid transparent;
+        border-color: #fff transparent transparent transparent;
+    }
+
+    /*point the arrow upwards when the select box is open (active):*/
+    .select-selected.select-arrow-active:after {
+        border-color: transparent transparent #fff transparent;
+        top: 7px;
+    }
+
+/*style the items (options), including the selected item:*/
+.select-items div, .select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+    position: absolute;
+    background-color: DodgerBlue;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}

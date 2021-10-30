@@ -1,0 +1,82 @@
+﻿@model MCV_Employee_Department.API.Model.Department
+@{
+
+    <div class="form-row">
+        <div class="col">
+            <label for="DepName" class="partalViewModalLables">Name<span style="color:red">*</span></label>
+            <input type="text" id="DepName" style=" width: 50%; margin-top: 30px;" class="form-control" value="@Model.Name" placeholder="Name">
+        </div>
+    </div>
+    <div class="form-row" style="margin-right: 43%; margin-top: 20px; padding-bottom: 20px; ">
+        <div class="d-flex justify-content-center" style="margin-right: 10%; margin-top: 1%;">
+            <div class="spinner-border" id="Loader" role="status" style="display:none !important">
+            </div>
+        </div>
+        <input type="button" id="SaveBtn" style=" margin-left: 25px; margin-right: -49px;" class="btn btn-info" onclick="DepartmentSaveChange()" value="حفظ" />
+        <input type="button" id="CancelBtn" class="btn btn-danger" onclick="Cancel()" value="إلغاء" />
+    </div>
+
+}
+
+<script>
+    function DepartmentSaveChange() {
+        $('#Loader').show();
+        $('#SaveBtn').hide();
+        $('#CancelBtn').hide();
+        if ($('#DepName').val().trim() == '' ) {
+            Swal.fire(
+                'warning',
+                'Please fill the mandatory data',
+                'warning'
+            );
+            $('#Loader').hide();
+            $('#SaveBtn').show();
+            $('#CancelBtn').show();
+            return 0;
+        }
+        var objToSend = {};
+        objToSend.Id = '@Model.Id';
+        objToSend.Name = $('#DepName').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddOrUpdateDepartment")",
+            data: { dep: objToSend},
+            dataType: "text",
+            success: function (response) {
+                if (response == "True") {
+                    Swal.fire(
+                        'Good',
+                        'Saved successfully',
+                        'success'
+                    ).then((result) => {
+                        Cancel();
+                        location.reload();
+                    })
+
+                }
+                else {
+                    Swal.fire(
+                        'warning',
+                        'Please try again later',
+                        'warning'
+                    );
+                    $('#Loader').hide();
+                    $('#SaveBtn').show();
+                    $('#CancelBtn').show();
+                }
+            },
+            error: function (req, status, error) {
+                Swal.fire(
+                    'warning',
+                    'Server error',
+                    'warning'
+                );
+                $('#Loader').hide();
+                $('#SaveBtn').show();
+                $('#CancelBtn').show();
+            }
+        });
+
+    }
+
+</script>
